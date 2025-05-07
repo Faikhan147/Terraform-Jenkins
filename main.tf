@@ -11,6 +11,11 @@ resource "aws_instance" "jenkins" {
 
   user_data = file("${path.module}/setup_jenkins.sh")
 
+provisioner "file" {
+    source      = "${path.module}/install-plugins.groovy"
+    destination = "/var/jenkins_home/init.groovy.d/install-plugins.groovy"
+  }
+
   tags = {
     Name = "Jenkins-Machine"
   }
