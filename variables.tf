@@ -22,3 +22,8 @@ variable "volume_size" {
   description = "Size of the root EBS volume"
   type        = number
 }
+
+variable "volume_type" {
+  description = "Type of the root EBS volume"
+  type        = string
+}
