@@ -2,6 +2,7 @@
 # Update and install Java
 sudo apt update -y
 sudo apt install openjdk-21-jdk -y
+java -version  # Verify Java version
 
 # Install Jenkins
 sudo wget -O /usr/share/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
@@ -19,6 +20,8 @@ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubun
 sudo apt update
 sudo apt install docker-ce -y
 sudo usermod -aG docker jenkins
+sudo apt install docker-ce -y
+docker --version  # Verify Docker version
 sudo systemctl restart jenkins
 
 # Install AWS CLI
