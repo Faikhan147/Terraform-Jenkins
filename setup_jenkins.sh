@@ -72,6 +72,11 @@ sudo mkdir -p /var/lib/jenkins@tmp
 sudo chmod -R 777 /var/lib/jenkins@tmp
 sudo chown -R jenkins:jenkins /var/lib/jenkins@tmp
 
+# Jenkins groovy file permissions
+sudo mkdir -p /var/jenkins_home/init.groovy.d
+sudo chmod -R 777 /var/lib/jenkins@tmp
+sudo chown -R jenkins:jenkins /var/jenkins_home/init.groovy.d
+
 # Setup JCasC
 sudo mkdir -p /var/lib/jenkins/casc_configs
 sudo chown -R jenkins:jenkins /var/lib/jenkins/casc_configs
