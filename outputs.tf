@@ -8,8 +8,8 @@ output "jenkins_instance_id" {
   value       = aws_instance.jenkins.id
 }
 
-output "jenkins_initial_password" {
-  description = "Initial Jenkins admin password"
-  value       = file("/tmp/jenkins_password.txt")
+output "jenkins_password_s3" {
+  description = "Jenkins password stored in S3"
+  value       = "s3://terraform-backend-faisal-khan/jenkins_password.txt"
   sensitive   = true
 }
