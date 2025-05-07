@@ -14,7 +14,8 @@ resource "aws_instance" "jenkins" {
  provisioner "remote-exec" {
     inline = [
       "sleep 60",  # Wait for Jenkins to initialize
-      "sudo cat /var/lib/jenkins/secrets/initialAdminPassword > /tmp/jenkins_password.txt"
+      "sudo cat /var/lib/jenkins/secrets/initialAdminPassword > /tmp/jenkins_password.txt",
+      "aws s3 cp /tmp/jenkins_password.txt s3://terraform-backend-faisal-khan/jenkins_password.txt"
     ]
   }
 
