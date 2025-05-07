@@ -6,7 +6,7 @@ resource "aws_instance" "jenkins" {
 
   root_block_device {
     volume_size = var.volume_size
-    volume_type = "gp3"
+    volume_type = var.volume_type
   }
 
   user_data = file("${path.module}/setup_jenkins.sh")
