@@ -56,6 +56,7 @@ sudo unzip sonar-scanner-cli-5.0.1.3006-linux.zip
 sudo mv sonar-scanner-5.0.1.3006-linux/* /opt/sonar-scanner/
 sudo rm -rf sonar-scanner-5.0.1.3006-linux
 sudo chown -R jenkins:jenkins /opt/sonar-scanner
+/opt/sonar-scanner/bin/sonar-scanner -v
 
 # Install Helm
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
