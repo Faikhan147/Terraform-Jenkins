@@ -6,7 +6,6 @@ variable "ami_id" {
 variable "instance_type" {
   description = "EC2 instance type"
   type        = string
-  default     = "t2.medium"
 }
 
 variable "key_name" {
@@ -22,5 +21,4 @@ variable "security_group_id" {
 variable "volume_size" {
   description = "Size of the root EBS volume"
   type        = number
-  default     = 25
 }
