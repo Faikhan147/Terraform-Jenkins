@@ -11,6 +11,13 @@ resource "aws_instance" "jenkins" {
 
   user_data = file("${path.module}/setup_jenkins.sh")
 
+ provisioner "remote-exec" {
+    inline = [
+      "sleep 60",  # Wait for Jenkins to initialize
+      "sudo cat /var/lib/jenkins/secrets/initialAdminPassword > /tmp/jenkins_password.txt"
+    ]
+  }
+
   tags = {
     Name = "Jenkins-Machine"
   }
