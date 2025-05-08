@@ -17,6 +17,18 @@ resource "aws_instance" "jenkins" {
   }
 }
 
+ provisioner "file" {
+    source      = "${path.module}/jenkins-casc/slack-credentials.yaml"
+    destination = "/tmp/slack-credentials.yaml"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "bash /tmp/setup_jenkins.sh"
+    ]
+  }
+}
+
 #  IAM Role for EC2 (Allowing SSM access)
 resource "aws_iam_role" "ssm_role" {
   name = "jenkins_ssm_role"
