@@ -14,6 +14,19 @@ resource "aws_instance" "jenkins" {
     Name = "Jenkins-Machine"
   }
 
+ # User Data Script to install SSM agent only
+  user_data = <<-EOF
+              #!/bin/bash
+              # Install SSM agent (if not already installed)
+              if ! command -v amazon-ssm-agent &> /dev/null
+              then
+                echo "SSM agent not found, installing..."
+                sudo snap install amazon-ssm-agent --classic
+                sudo systemctl start amazon-ssm-agent
+                sudo systemctl enable amazon-ssm-agent
+              fi
+              EOF
+
   # Copy setup script
   provisioner "file" {
     source      = "${path.module}/setup_jenkins.sh"
