@@ -13,30 +13,29 @@ resource "aws_instance" "jenkins" {
   tags = {
     Name = "Jenkins-Machine"
   }
+
+  # Copy setup script
+  provisioner "file" {
+    source      = "${path.module}/setup_jenkins.sh"
+    destination = "/tmp/setup_jenkins.sh"
+  }
+
+  # Copy Slack config
+  provisioner "file" {
+    source      = "${path.module}/jenkins-casc/slack-credentials.yaml"
+    destination = "/tmp/slack-credentials.yaml"
+  }
+
+  # Run setup script
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/setup_jenkins.sh",
+      "bash /tmp/setup_jenkins.sh"
+    ]
+  }
 }
 
- # Copy setup script
-provisioner "file" {
-  source      = "${path.module}/setup_jenkins.sh"
-  destination = "/tmp/setup_jenkins.sh"
-}
-
-# Copy Slack config
-provisioner "file" {
-  source      = "${path.module}/jenkins-casc/slack-credentials.yaml"
-  destination = "/tmp/slack-credentials.yaml"
-}
-
-# Run setup script
-provisioner "remote-exec" {
-  inline = [
-    "chmod +x /tmp/setup_jenkins.sh",
-    "bash /tmp/setup_jenkins.sh"
-  ]
-}
-
-
-#  IAM Role for EC2 (Allowing SSM access)
+# IAM Role for EC2 (Allowing SSM access)
 resource "aws_iam_role" "ssm_role" {
   name = "jenkins_ssm_role"
 
@@ -52,7 +51,7 @@ resource "aws_iam_role" "ssm_role" {
   })
 }
 
-#  Attach AmazonSSMManagedInstanceCore policy
+# Attach AmazonSSMManagedInstanceCore policy
 resource "aws_iam_role_policy_attachment" "ssm_attach" {
   role       = aws_iam_role.ssm_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
