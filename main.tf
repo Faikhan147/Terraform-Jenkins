@@ -33,10 +33,20 @@ resource "aws_instance" "jenkins" {
     destination = "/tmp/setup_jenkins.sh"
   }
 
+connection {
+      type = "ssm"
+    }
+  }
+
   # Copy Slack config
   provisioner "file" {
     source      = "${path.module}/jenkins-casc/slack-credentials.yaml"
     destination = "/tmp/slack-credentials.yaml"
+  }
+
+connection {
+      type = "ssm"
+    }
   }
 
   # Run setup script
@@ -47,6 +57,11 @@ resource "aws_instance" "jenkins" {
     ]
   }
 }
+
+connection {
+      type = "ssm"
+    }
+  }
 
 # IAM Role for EC2 (Allowing SSM access)
 resource "aws_iam_role" "ssm_role" {
