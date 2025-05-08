@@ -81,7 +81,7 @@ sudo chown -R jenkins:jenkins /var/jenkins_home/init.groovy.d
 cat <<EOF | sudo tee /var/jenkins_home/init.groovy.d/install-plugins.groovy
 def plugins = [
     "git-parameter",          // Git Parameter
-    "github-auth",            // GitHub Authentication
+    "github-oauth",           // GitHub Authentication
     "pipeline-github",        // Pipeline: GitHub
     "generic-webhook-trigger", // Generic Webhook Trigger
     "git-push",               // Git Push
@@ -89,20 +89,27 @@ def plugins = [
     "slack"                   // Slack Notification
 ]
 
-def jenkinsInstance = Jenkins.getInstance()
+def jenkinsInstance = jenkins.model.Jenkins.getInstance()
 def pluginManager = jenkinsInstance.getPluginManager()
 def updateCenter = jenkinsInstance.getUpdateCenter()
 
 plugins.each {
-    if (!pluginManager.getPlugin(it)) {
-        def plugin = updateCenter.getPlugin(it)
-        if (plugin) {
-            plugin.deploy()
+    def plugin = pluginManager.getPlugin(it)
+    if (!plugin) {
+        def pluginToInstall = updateCenter.getPlugin(it)
+        if (pluginToInstall) {
+            pluginToInstall.deploy()
+            println("Plugin \${it} has been installed.")
+        } else {
+            println("Plugin \${it} not found.")
         }
+    } else {
+        println("Plugin \${it} is already installed.")
     }
 }
 jenkinsInstance.save()
 EOF
+
 
 sudo chown jenkins:jenkins /var/jenkins_home/init.groovy.d/install-plugins.groovy
 sudo chmod 755 /var/jenkins_home/init.groovy.d/install-plugins.groovy
