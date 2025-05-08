@@ -117,7 +117,14 @@ sudo chmod 755 /var/lib/jenkins/init.groovy.d/install-plugins.groovy
 # Setup JCasC
 sudo mkdir -p /var/lib/jenkins/casc_configs
 sudo chown -R jenkins:jenkins /var/lib/jenkins/casc_configs
-echo 'CASC_JENKINS_CONFIG=/var/lib/jenkins/casc_configs/jenkins.yaml' | sudo tee -a /etc/default/jenkins
+
+# Move pre-written YAML from /tmp to correct folder
+sudo mv /tmp/slack-credentials.yaml /var/lib/jenkins/casc_configs/
+sudo chown jenkins:jenkins /var/lib/jenkins/casc_configs/slack-credentials.yaml
+sudo chmod 644 /var/lib/jenkins/casc_configs/slack-credentials.yaml
+
+echo 'SLACK_SECRET=https://hooks.slack.com/services/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' | sudo tee -a /etc/default/jenkins
+echo 'CASC_JENKINS_CONFIG=/var/lib/jenkins/casc_configs' | sudo tee -a /etc/default/jenkins
 
 # Install SSM Agent
 sudo snap install amazon-ssm-agent --classic
