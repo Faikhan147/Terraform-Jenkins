@@ -73,12 +73,12 @@ sudo chmod -R 777 /var/lib/jenkins@tmp
 sudo chown -R jenkins:jenkins /var/lib/jenkins@tmp
 
 # Jenkins groovy plugins dir
-sudo mkdir -p /var/jenkins_home/init.groovy.d
-sudo chmod -R 777 /var/jenkins_home/init.groovy.d
-sudo chown -R jenkins:jenkins /var/jenkins_home/init.groovy.d
+sudo mkdir -p /var/lib/jenkins/init.groovy.d
+sudo chmod -R 777 /var/lib/jenkins/init.groovy.d
+sudo chown -R jenkins:jenkins /var/lib/jenkins/init.groovy.d
 
 # Write install-plugins.groovy content
-cat <<EOF | sudo tee /var/jenkins_home/init.groovy.d/install-plugins.groovy
+cat <<EOF | sudo tee /var/lib/jenkins/init.groovy.d/install-plugins.groovy
 def plugins = [
     "git-parameter",          // Git Parameter
     "github-oauth",           // GitHub Authentication
@@ -111,8 +111,8 @@ jenkinsInstance.save()
 EOF
 
 
-sudo chown jenkins:jenkins /var/jenkins_home/init.groovy.d/install-plugins.groovy
-sudo chmod 755 /var/jenkins_home/init.groovy.d/install-plugins.groovy
+sudo chown jenkins:jenkins /var/lib/jenkins/init.groovy.d/install-plugins.groovy
+sudo chmod 755 /var/lib/jenkins/init.groovy.d/install-plugins.groovy
 
 # Setup JCasC
 sudo mkdir -p /var/lib/jenkins/casc_configs
