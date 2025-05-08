@@ -1,10 +1,12 @@
-resource "aws_instance" "jenkins" {
+# Define the EC2 instance for Jenkins
+resource "aws_instance" "setup_jenkins" {
   ami                    = var.ami_id
   instance_type          = var.instance_type
   key_name               = var.key_name
   vpc_security_group_ids = [var.security_group_id]
-  iam_instance_profile   = aws_iam_instance_profile.ssm_profile.name  # SSM profile linked
+  iam_instance_profile   = aws_iam_instance_profile.ssm_profile.name
 
+  # Root block device
   root_block_device {
     volume_size = var.volume_size
     volume_type = var.volume_type
@@ -14,10 +16,9 @@ resource "aws_instance" "jenkins" {
     Name = "Jenkins-Machine"
   }
 
- # User Data Script to install SSM agent only
+  # User data script to install SSM agent
   user_data = <<-EOF
               #!/bin/bash
-              # Install SSM agent (if not already installed)
               if ! command -v amazon-ssm-agent &> /dev/null
               then
                 echo "SSM agent not found, installing..."
@@ -27,41 +28,36 @@ resource "aws_instance" "jenkins" {
               fi
               EOF
 
-  # Copy setup script
+  # Provisioners: Copy and execute setup scripts
   provisioner "file" {
     source      = "${path.module}/setup_jenkins.sh"
     destination = "/tmp/setup_jenkins.sh"
-  }
 
-connection {
+    connection {
       type = "ssm"
     }
   }
 
-  # Copy Slack config
   provisioner "file" {
     source      = "${path.module}/jenkins-casc/slack-credentials.yaml"
     destination = "/tmp/slack-credentials.yaml"
-  }
 
-connection {
+    connection {
       type = "ssm"
     }
   }
 
-  # Run setup script
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/setup_jenkins.sh",
       "bash /tmp/setup_jenkins.sh"
     ]
-  }
-}
 
-connection {
+    connection {
       type = "ssm"
     }
   }
+}
 
 # IAM Role for EC2 (Allowing SSM access)
 resource "aws_iam_role" "ssm_role" {
@@ -69,13 +65,15 @@ resource "aws_iam_role" "ssm_role" {
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
-    Statement = [{
-      Effect    = "Allow"
-      Action    = "sts:AssumeRole"
-      Principal = {
-        Service = "ec2.amazonaws.com"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = "sts:AssumeRole"
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
       }
-    }]
+    ]
   })
 }
 
