@@ -114,32 +114,6 @@ EOF
 sudo chown jenkins:jenkins /var/lib/jenkins/init.groovy.d/install-plugins.groovy
 sudo chmod 755 /var/lib/jenkins/init.groovy.d/install-plugins.groovy
 
-# Add Slack webhook credentials Groovy script
-cat <<EOF | sudo tee /var/lib/jenkins/init.groovy.d/slack-credentials.groovy
-import com.cloudbees.plugins.credentials.*
-import com.cloudbees.plugins.credentials.domains.*
-import com.cloudbees.plugins.credentials.impl.*
-import hudson.util.Secret
-import jenkins.model.Jenkins
-
-def credentials_store = Jenkins.instance.getExtensionList(
-    'com.cloudbees.plugins.credentials.SystemCredentialsProvider'
-)[0].getStore()
-
-def secretText = new StringCredentialsImpl(
-    CredentialsScope.GLOBAL,
-    "slack-webhook", 
-    "Slack Webhook URL", 
-    Secret.fromString("https://hooks.slack.com/services/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")
-)
-
-credentials_store.addCredentials(Domain.global(), secretText)
-EOF
-
-# Set permissions for slack credentials file
-sudo chown jenkins:jenkins /var/lib/jenkins/init.groovy.d/slack-credentials.groovy
-sudo chmod 755 /var/lib/jenkins/init.groovy.d/slack-credentials.groovy
-
 # Setup JCasC
 sudo mkdir -p /var/lib/jenkins/casc_configs
 sudo chown -R jenkins:jenkins /var/lib/jenkins/casc_configs
