@@ -10,17 +10,31 @@ resource "aws_instance" "jenkins" {
     volume_type = var.volume_type
   }
 
-  user_data = file("${path.module}/setup_jenkins.sh")
-
   tags = {
     Name = "Jenkins-Machine"
   }
 }
 
- provisioner "file" {
-    source      = "${path.module}/jenkins-casc/slack-credentials.yaml"
-    destination = "/tmp/slack-credentials.yaml"
-  }
+ # Copy setup script
+provisioner "file" {
+  source      = "${path.module}/setup_jenkins.sh"
+  destination = "/tmp/setup_jenkins.sh"
+}
+
+# Copy Slack config
+provisioner "file" {
+  source      = "${path.module}/jenkins-casc/slack-credentials.yaml"
+  destination = "/tmp/slack-credentials.yaml"
+}
+
+# Run setup script
+provisioner "remote-exec" {
+  inline = [
+    "chmod +x /tmp/setup_jenkins.sh",
+    "bash /tmp/setup_jenkins.sh"
+  ]
+}
+
 
 #  IAM Role for EC2 (Allowing SSM access)
 resource "aws_iam_role" "ssm_role" {
