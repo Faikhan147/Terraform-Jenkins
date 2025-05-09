@@ -119,7 +119,7 @@ sudo mkdir -p /var/lib/jenkins/casc_configs
 sudo chown -R jenkins:jenkins /var/lib/jenkins/casc_configs
 
 # Move pre-written YAML from /tmp to correct folder
-sudo mv /tmp/slack-credentials.yaml /var/lib/jenkins/casc_configs/
+sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Credentials/slack-credentials.yaml /var/lib/jenkins/casc_configs/
 sudo chown jenkins:jenkins /var/lib/jenkins/casc_configs/slack-credentials.yaml
 sudo chmod 644 /var/lib/jenkins/casc_configs/slack-credentials.yaml
 
