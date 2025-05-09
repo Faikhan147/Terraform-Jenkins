@@ -1,4 +1,4 @@
-resource "aws_instance" "jenkins" {
+resource "aws_instance" "jenkins_instance" {
   ami                    = var.ami_id
   instance_type          = var.instance_type
   key_name               = var.key_name
