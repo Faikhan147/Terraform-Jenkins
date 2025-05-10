@@ -10,6 +10,15 @@ sudo wget -O /usr/share/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debi
 echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
 sudo apt update
 sudo apt install jenkins -y
+
+# Inject EnvironmentFile into systemd service (if not already present)
+JENKINS_SERVICE="/usr/lib/systemd/system/jenkins.service"
+if ! grep -q "EnvironmentFile=/etc/default/jenkins" "$JENKINS_SERVICE"; then
+  sudo sed -i '/^\[Service\]/a EnvironmentFile=/etc/default/jenkins' "$JENKINS_SERVICE"
+fi
+
+# Reload systemd and start Jenkins
+sudo systemctl daemon-reload
 sudo systemctl enable jenkins
 sudo systemctl start jenkins
 
