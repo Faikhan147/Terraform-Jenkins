@@ -11,11 +11,31 @@ echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkin
 sudo apt update
 sudo apt install jenkins -y
 
-# Inject EnvironmentFile into systemd service (if not already present)
-JENKINS_SERVICE="/usr/lib/systemd/system/jenkins.service"
-if ! grep -q "EnvironmentFile=/etc/default/jenkins" "$JENKINS_SERVICE"; then
-  sudo sed -i '/^\[Service\]/a EnvironmentFile=/etc/default/jenkins' "$JENKINS_SERVICE"
-fi
+# Replace jenkins.service content
+cat <<EOF | sudo tee /usr/lib/systemd/system/jenkins.service > /dev/null
+[Unit]
+Description=Jenkins Continuous Integration Server
+After=network.target
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/default/jenkins
+ExecStart=/usr/bin/java -Djava.awt.headless=true -jar /usr/share/java/jenkins.war --webroot=/var/cache/jenkins/war --httpPort=8080
+User=jenkins
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# Replace /etc/default/jenkins content
+cat <<EOF | sudo tee /etc/default/jenkins > /dev/null
+# Jenkins home directory
+JENKINS_HOME="/var/lib/jenkins"
+
+SLACK_SECRET=https://hooks.slack.com/services/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
+CASC_JENKINS_CONFIG=/var/lib/jenkins/casc_configs
+EOF
 
 # Reload systemd and start Jenkins
 sudo systemctl daemon-reload
@@ -133,8 +153,6 @@ sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Credentials/slack-cred
 sudo chown jenkins:jenkins /var/lib/jenkins/casc_configs/slack-credentials.yaml
 sudo chmod 644 /var/lib/jenkins/casc_configs/slack-credentials.yaml
 
-echo 'SLACK_SECRET=https://hooks.slack.com/services/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' | sudo tee -a /etc/default/jenkins
-echo 'CASC_JENKINS_CONFIG=/var/lib/jenkins/casc_configs' | sudo tee -a /etc/default/jenkins
 
 # Final Jenkins restart
 sudo systemctl restart jenkins
