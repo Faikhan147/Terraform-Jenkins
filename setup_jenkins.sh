@@ -2,7 +2,7 @@
 
 # Update and install Java
 sudo apt update -y
-sudo apt install openjdk-21-jdk -y
+sudo apt install openjdk-11-jdk -y
 java -version
 
 # Install Jenkins
