@@ -33,7 +33,6 @@ cat <<EOF | sudo tee /etc/default/jenkins > /dev/null
 # Jenkins home directory
 JENKINS_HOME="/var/lib/jenkins"
 
-SLACK_SECRET=https://hooks.slack.com/services/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
 CASC_JENKINS_CONFIG=/var/lib/jenkins/casc_configs
 EOF
 
