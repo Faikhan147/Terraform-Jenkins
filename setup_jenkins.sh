@@ -149,10 +149,18 @@ sudo mkdir -p /var/lib/jenkins/casc_configs
 # Copy all Credentials YAML files from S3 folder to Jenkins config folder
 sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Credentials/ /var/lib/jenkins/casc_configs/ --recursive
 
-# Change ownership and permission for all copied files
+# Copy SonarQube Authentication YAML file from S3 folder to Jenkins config folder
+sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-System/sonar-authentication /var/lib/jenkins/casc_configs/
+
+# Copy SonarQube Scanner YAML file from S3 folder to Jenkins config folder
+sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Tools/sonar-scanner /var/lib/jenkins/casc_configs/
+
+# Copy Pipeline Jobs  YAML files from S3 folder to Jenkins config folder
+sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Pipelines/ /var/lib/jenkins/casc_configs/ --recursive
+
+# Change ownership and permission for  copied file
 sudo chown -R jenkins:jenkins /var/lib/jenkins/casc_configs/
 sudo find /var/lib/jenkins/casc_configs/ -type f -name "*.yaml" -exec chmod 644 {} \;
-
 
 # Final Jenkins restart
 sudo systemctl restart jenkins
