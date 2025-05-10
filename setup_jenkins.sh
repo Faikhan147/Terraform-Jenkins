@@ -86,7 +86,8 @@ def plugins = [
     "generic-webhook-trigger",
     "git-push",               
     "sonar",                  
-    "slack"                   
+    "slack",
+    "configuration-as-code"
 ]
 
 def jenkinsInstance = jenkins.model.Jenkins.getInstance()
