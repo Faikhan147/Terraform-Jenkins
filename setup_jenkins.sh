@@ -147,10 +147,12 @@ sudo chmod 755 /var/lib/jenkins/init.groovy.d/install-plugins.groovy
 sudo mkdir -p /var/lib/jenkins/casc_configs
 sudo chown -R jenkins:jenkins /var/lib/jenkins/casc_configs
 
-# Move pre-written YAML from /tmp to correct folder
-sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Credentials/slack-credentials.yaml /var/lib/jenkins/casc_configs/
-sudo chown jenkins:jenkins /var/lib/jenkins/casc_configs/slack-credentials.yaml
-sudo chmod 644 /var/lib/jenkins/casc_configs/slack-credentials.yaml
+# Copy all Credentials YAML files from S3 folder to Jenkins config folder
+sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Credentials/ /var/lib/jenkins/casc_configs/ --recursive
+
+# Change ownership and permission for all copied files
+sudo chown -R jenkins:jenkins /var/lib/jenkins/casc_configs/
+sudo find /var/lib/jenkins/casc_configs/ -type f -name "*.yaml" -exec chmod 644 {} \;
 
 
 # Final Jenkins restart
