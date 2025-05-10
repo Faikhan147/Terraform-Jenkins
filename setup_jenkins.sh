@@ -127,10 +127,5 @@ sudo chmod 644 /var/lib/jenkins/casc_configs/slack-credentials.yaml
 echo 'SLACK_SECRET=https://hooks.slack.com/services/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' | sudo tee -a /etc/default/jenkins
 echo 'CASC_JENKINS_CONFIG=/var/lib/jenkins/casc_configs' | sudo tee -a /etc/default/jenkins
 
-# Install SSM Agent
-sudo snap install amazon-ssm-agent --classic
-sudo systemctl enable amazon-ssm-agent
-sudo systemctl start amazon-ssm-agent
-
 # Final Jenkins restart
 sudo systemctl restart jenkins
