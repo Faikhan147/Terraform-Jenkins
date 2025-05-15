@@ -115,7 +115,8 @@ def plugins = [
     "git-push",               
     "sonar",                  
     "slack",
-    "configuration-as-code"
+    "configuration-as-code",
+    "job-dsl"
 ]
 
 def jenkinsInstance = jenkins.model.Jenkins.getInstance()
@@ -145,6 +146,7 @@ sudo chmod 755 /var/lib/jenkins/init.groovy.d/install-plugins.groovy
 
 # Setup JCasC
 sudo mkdir -p /var/lib/jenkins/casc_configs
+sudo mkdir -p /var/lib/jenkins/dsl_scripts
 
 # Copy all Credentials YAML files from S3 folder to Jenkins config folder
 sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Credentials/ /var/lib/jenkins/casc_configs/ --recursive
@@ -155,12 +157,14 @@ sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-System/sonar-authentic
 # Copy SonarQube Scanner YAML file from S3 folder to Jenkins config folder
 sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Tools/sonar-scanner.yaml /var/lib/jenkins/casc_configs/
 
-# Copy Pipeline Jobs  YAML files from S3 folder to Jenkins config folder
-sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Pipelines/ /var/lib/jenkins/casc_configs/ --recursive
+# Copy seed Job  YAML files from S3 folder to Jenkins config folder
+sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Pipelines/seed-jobs /var/lib/jenkins/init.groovy.d/ --recursive
 
 # Change ownership and permission for  copied file
 sudo chown -R jenkins:jenkins /var/lib/jenkins/casc_configs/
+sudo chown -R jenkins:jenkins /var/lib/jenkins/dsl_scripts/
 sudo find /var/lib/jenkins/casc_configs/ -type f -name "*.yaml" -exec chmod 644 {} \;
+sudo find /var/lib/jenkins/dsl_scripts/ -type f -name "*.yaml" -exec chmod 644 {} \;
 
 # Final Jenkins restart
 sudo systemctl restart jenkins
