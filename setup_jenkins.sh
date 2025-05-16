@@ -100,17 +100,22 @@ sudo mkdir -p /var/lib/jenkins@tmp
 sudo chmod -R 777 /var/lib/jenkins@tmp
 sudo chown -R jenkins:jenkins /var/lib/jenkins@tmp
 
-# Jenkins groovy plugins dir
+# Setup groovy and JCAS dir for Jenkins-Plugins and Jenkins-Pipelines  
 sudo mkdir -p /var/lib/jenkins/init.groovy.d
-sudo chmod -R 777 /var/lib/jenkins/init.groovy.d
+sudo mkdir -p /var/lib/jenkins/casc_configs
+sudo mkdir -p /var/lib/jenkins/dsl_scripts
 sudo chown -R jenkins:jenkins /var/lib/jenkins/init.groovy.d
+sudo chown -R jenkins:jenkins /var/lib/jenkins/casc_configs/
+sudo chown -R jenkins:jenkins /var/lib/jenkins/dsl_scripts/
+sudo chmod -R 644 /var/lib/jenkins/init.groovy.d
+sudo find /var/lib/jenkins/casc_configs/ -type f -name "*.yaml" -exec chmod 644 {} \;
+sudo find /var/lib/jenkins/dsl_scripts/ -type f -name "*.yaml" -exec chmod 644 {} \;
 
 # Copy Jenkins Plugins  YAML file from S3 folder to Jenkins config folder
 sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Plugins/  /var/lib/jenkins/init.groovy.d/ --recursive
 
-# Setup JCasC
-sudo mkdir -p /var/lib/jenkins/casc_configs
-sudo mkdir -p /var/lib/jenkins/dsl_scripts
+# Copy seed Job  YAML file from S3 folder to Jenkins config folder
+sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Pipelines/seed-job /var/lib/jenkins/init.groovy.d/ --recursive
 
 # Copy all Credentials YAML files from S3 folder to Jenkins config folder
 sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Credentials/ /var/lib/jenkins/casc_configs/ --recursive
@@ -120,15 +125,6 @@ sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-System/sonar-authentic
 
 # Copy SonarQube Scanner YAML file from S3 folder to Jenkins config folder
 sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Tools/sonar-scanner.yaml /var/lib/jenkins/casc_configs/
-
-# Copy seed Job  YAML files from S3 folder to Jenkins config folder
-sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Pipelines/seed-job /var/lib/jenkins/init.groovy.d/ --recursive
-
-# Change ownership and permission for  copied file
-sudo chown -R jenkins:jenkins /var/lib/jenkins/casc_configs/
-sudo chown -R jenkins:jenkins /var/lib/jenkins/dsl_scripts/
-sudo find /var/lib/jenkins/casc_configs/ -type f -name "*.yaml" -exec chmod 644 {} \;
-sudo find /var/lib/jenkins/dsl_scripts/ -type f -name "*.yaml" -exec chmod 644 {} \;
 
 # Final Jenkins restart
 sudo systemctl restart jenkins
