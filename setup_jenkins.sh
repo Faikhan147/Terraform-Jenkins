@@ -114,9 +114,6 @@ sudo find /var/lib/jenkins/dsl_scripts/ -type f -name "*.yaml" -exec chmod 644 {
 # Copy Jenkins Plugins  YAML file from S3 folder to Jenkins config folder
 sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Plugins/  /var/lib/jenkins/init.groovy.d/ --recursive
 
-# Copy seed Job  YAML file from S3 folder to Jenkins config folder
-sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Pipelines/seed-job /var/lib/jenkins/init.groovy.d/ --recursive
-
 # Copy all Credentials YAML files from S3 folder to Jenkins config folder
 sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Credentials/ /var/lib/jenkins/casc_configs/ --recursive
 
@@ -125,6 +122,9 @@ sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-System/sonar-authentic
 
 # Copy SonarQube Scanner YAML file from S3 folder to Jenkins config folder
 sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Tools/sonar-scanner.yaml /var/lib/jenkins/casc_configs/
+
+# Copy seed Job  YAML file from S3 folder to Jenkins config folder
+sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Pipelines/seed-job /var/lib/jenkins/init.groovy.d/ --recursive
 
 # Final Jenkins restart
 sudo systemctl restart jenkins
