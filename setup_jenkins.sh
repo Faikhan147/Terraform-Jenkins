@@ -158,7 +158,7 @@ sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-System/sonar-authentic
 sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Tools/sonar-scanner.yaml /var/lib/jenkins/casc_configs/
 
 # Copy seed Job  YAML files from S3 folder to Jenkins config folder
-sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Pipelines/seed-jobs /var/lib/jenkins/init.groovy.d/ --recursive
+sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Pipelines/seed-job /var/lib/jenkins/init.groovy.d/ --recursive
 
 # Change ownership and permission for  copied file
 sudo chown -R jenkins:jenkins /var/lib/jenkins/casc_configs/
