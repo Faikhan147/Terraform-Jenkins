@@ -105,44 +105,8 @@ sudo mkdir -p /var/lib/jenkins/init.groovy.d
 sudo chmod -R 777 /var/lib/jenkins/init.groovy.d
 sudo chown -R jenkins:jenkins /var/lib/jenkins/init.groovy.d
 
-# Write install-plugins.groovy content
-cat <<EOF | sudo tee /var/lib/jenkins/init.groovy.d/install-plugins.groovy
-def plugins = [
-    "git-parameter",          
-    "github-oauth",           
-    "pipeline-github",        
-    "generic-webhook-trigger",
-    "git-push",               
-    "sonar",                  
-    "slack",
-    "configuration-as-code",
-    "job-dsl"
-]
-
-def jenkinsInstance = jenkins.model.Jenkins.getInstance()
-def pluginManager = jenkinsInstance.getPluginManager()
-def updateCenter = jenkinsInstance.getUpdateCenter()
-
-plugins.each {
-    def plugin = pluginManager.getPlugin(it)
-    if (!plugin) {
-        def pluginToInstall = updateCenter.getPlugin(it)
-        if (pluginToInstall) {
-            pluginToInstall.deploy()
-            println("Plugin \${it} has been installed.")
-        } else {
-            println("Plugin \${it} not found.")
-        }
-    } else {
-        println("Plugin \${it} is already installed.")
-    }
-}
-jenkinsInstance.save()
-EOF
-
-# Set permissions for plugin script
-sudo chown jenkins:jenkins /var/lib/jenkins/init.groovy.d/install-plugins.groovy
-sudo chmod 755 /var/lib/jenkins/init.groovy.d/install-plugins.groovy
+# Copy Jenkins Plugins  YAML file from S3 folder to Jenkins config folder
+sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Plugins/ /var/lib/jenkins/casc_configs/ --recursive
 
 # Setup JCasC
 sudo mkdir -p /var/lib/jenkins/casc_configs
