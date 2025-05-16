@@ -106,7 +106,7 @@ sudo chmod -R 777 /var/lib/jenkins/init.groovy.d
 sudo chown -R jenkins:jenkins /var/lib/jenkins/init.groovy.d
 
 # Copy Jenkins Plugins  YAML file from S3 folder to Jenkins config folder
-sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Plugins/ /var/lib/jenkins/casc_configs/ --recursive
+sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Plugins/  /var/lib/jenkins/init.groovy.d/ --recursive
 
 # Setup JCasC
 sudo mkdir -p /var/lib/jenkins/casc_configs
