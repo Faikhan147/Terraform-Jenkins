@@ -126,5 +126,8 @@ sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Tools/sonar-scanner.ya
 # Copy seed Job  YAML file from S3 folder to Jenkins config folder
 sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Pipelines/seed-job /var/lib/jenkins/init.groovy.d/ --recursive
 
-# Final Jenkins restart
+# Final Jenkins reload and restart
+# Reload systemd and start Jenkins
+sudo systemctl daemon-reload
+sudo systemctl enable jenkins
 sudo systemctl restart jenkins
