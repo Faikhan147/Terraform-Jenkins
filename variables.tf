@@ -27,3 +27,13 @@ variable "volume_type" {
   description = "Type of the root EBS volume"
   type        = string
 }
+
+variable "jenkins_role_name" {
+  description = "IAM Role name for Jenkins access"
+  type        = string
+}
+
+variable "kms_key_arn" {
+  description = "ARN of the KMS key to allow decrypt access"
+  type        = string
+}
