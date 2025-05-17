@@ -37,3 +37,8 @@ resource "aws_iam_role_policy_attachment" "attach_kms_decrypt" {
   role       = aws_iam_role.jenkins_role.name
   policy_arn = aws_iam_policy.kms_decrypt_policy.arn
 }
+
+resource "aws_iam_instance_profile" "jenkins_profile" {
+  name = var.jenkins_role_name
+  role = aws_iam_role.jenkins_role.name
+}
