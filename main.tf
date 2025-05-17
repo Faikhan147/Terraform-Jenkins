@@ -3,6 +3,8 @@ resource "aws_instance" "jenkins_instance" {
   instance_type          = var.instance_type
   #key_name               = var.key_name
   vpc_security_group_ids = [var.security_group_id]
+  iam_instance_profile = aws_iam_instance_profile.jenkins_profile.name
+
 
   root_block_device {
     volume_size = var.volume_size
