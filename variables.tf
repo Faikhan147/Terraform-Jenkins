@@ -37,3 +37,8 @@ variable "kms_key_arn" {
   description = "ARN of the KMS key to allow decrypt access"
   type        = string
 }
+
+variable "kms_key_name" {
+  description = "KMS key name"
+  type        = string
+}
