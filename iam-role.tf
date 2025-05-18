@@ -1,5 +1,7 @@
-resource "aws_iam_role" "jenkins_role" {
-  name = var.jenkins_role_name
+# Role creation of jenkins-s3-access
+
+resource "aws_iam_role" "jenkins_s3_role" {
+  name = var.jenkins_s3_role_name
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -12,6 +14,8 @@ resource "aws_iam_role" "jenkins_role" {
     }]
   })
 }
+
+# Policy creation of s3-kms-decrypt
 
 resource "aws_iam_policy" "kms_decrypt_policy" {
   name        = var.kms_key_name
@@ -28,17 +32,54 @@ resource "aws_iam_policy" "kms_decrypt_policy" {
   })
 }
 
+# Default policy AmazonS3FullAccess attached to Role jenkins-s3-access
+
 resource "aws_iam_role_policy_attachment" "attach_s3_full_access" {
-  role       = aws_iam_role.jenkins_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+  role       = aws_iam_role.jenkins_s3_role.name
+  policy_arn = var.AmazonS3FullAccess_arn
 }
 
+# Policy s3-kms-decrypt attached to Role jenkins-s3-access
+
 resource "aws_iam_role_policy_attachment" "attach_kms_decrypt" {
-  role       = aws_iam_role.jenkins_role.name
+  role       = aws_iam_role.jenkins_s3_role.name
   policy_arn = aws_iam_policy.kms_decrypt_policy.arn
 }
 
-resource "aws_iam_instance_profile" "jenkins_profile" {
-  name = var.jenkins_role_name
-  role = aws_iam_role.jenkins_role.name
+# Instance profile creation for jenkins-s3-access attach to Jenkins EC2
+
+resource "aws_iam_instance_profile" "jenkins_s3_profile" {
+  name = var.jenkins_s3_role_name
+  role = aws_iam_role.jenkins_s3_role.name
+}
+
+# Role creation of jenkins-ssm-access
+
+resource "aws_iam_role" "jenkins_ssm_role" {
+  name = var.jenkins_ssm_role_name
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [{
+      Effect = "Allow",
+      Principal = {
+        Service = "ec2.amazonaws.com"
+      },
+      Action = "sts:AssumeRole"
+    }]
+  })
+}
+
+# Default policy AmazonSSMManagedInstanceCore attached to Role jenkins-ssm-access
+
+resource "aws_iam_role_policy_attachment" "attach_ssm_access" {
+  role       = aws_iam_role.jenkins_ssm_role.name
+  policy_arn = var.AmazonSSMManagedInstanceCore_arn
+}
+
+# Instance profile creation for jenkins-ssm-access attach to Jenkins EC2
+
+resource "aws_iam_instance_profile" "jenkins_ssm_profile" {
+  name = var.jenkins_ssm_role_name
+  role = aws_iam_role.jenkins_ssm_role.name
 }
