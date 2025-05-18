@@ -28,8 +28,8 @@ variable "volume_type" {
   type        = string
 }
 
-variable "jenkins_role_name" {
-  description = "IAM Role name for Jenkins access"
+variable "jenkins_s3_role_name" {
+  description = "IAM Role name for Jenkins s3 access"
   type        = string
 }
 
@@ -40,5 +40,20 @@ variable "kms_key_arn" {
 
 variable "kms_key_name" {
   description = "KMS key name"
+  type        = string
+}
+
+variable "AmazonS3FullAccess_arn" {
+  description = "ARN of the KMS key to allow s3 decrypt access"
+  type        = string
+}
+
+variable "jenkins_ssm_role_name" {
+  description = "IAM Role name for Jenkins ssm access"
+  type        = string
+}
+
+variable "AmazonSSMManagedInstanceCore_arn" {
+  description = "ARN of the policy to allow SSM access"
   type        = string
 }
