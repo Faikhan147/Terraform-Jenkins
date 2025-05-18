@@ -35,21 +35,21 @@ resource "aws_iam_policy" "kms_decrypt_policy" {
 # Default policy AmazonS3FullAccess attached to Role  jenkins-s3-ssm-access
 
 resource "aws_iam_role_policy_attachment" "attach_s3_full_access" {
-  role       = aws_iam_role.jenkins_s3_role.name
+  role       = aws_iam_role.jenkins_s3_ssm_role.name
   policy_arn = var.AmazonS3FullAccess_arn
 }
 
 # Policy s3-kms-decrypt attached to Role  jenkins-s3-ssm-access
 
 resource "aws_iam_role_policy_attachment" "attach_kms_decrypt" {
-  role       = aws_iam_role.jenkins_s3_role.name
+  role       = aws_iam_role.jenkins_s3_ssm_role.name
   policy_arn = aws_iam_policy.kms_decrypt_policy.arn
 }
 
 # Default policy AmazonSSMManagedInstanceCore attached to Role  jenkins-s3-ssm-access
 
 resource "aws_iam_role_policy_attachment" "attach_ssm_access" {
-  role       = aws_iam_role.jenkins_ssm_role.name
+  role       = aws_iam_role.jenkins_s3_ssm_role.name
   policy_arn = var.AmazonSSMManagedInstanceCore_arn
 }
 
