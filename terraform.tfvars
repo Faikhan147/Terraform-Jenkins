@@ -1,7 +1,6 @@
 ami_id             = "ami-0e35ddab05955cf57"
 instance_type      = "t2.medium"
-#key_name           = "WIN-KEY-PEM"
-security_group_id  = "sg-0123544b2570bf42b"
+security_group_id  = "sg-001ef4482c3ff6aa3"
 volume_size        = 25
 volume_type = "gp3"
 jenkins_s3_ssm_role_name  = "jenkins-s3-ssm-access"
