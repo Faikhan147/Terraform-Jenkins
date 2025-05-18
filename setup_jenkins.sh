@@ -95,6 +95,13 @@ sudo apt install nodejs npm -y
 node -v
 npm -v
 
+# SSM agent installtion 
+sudo apt-get install snapd -y
+sudo snap install amazon-ssm-agent --classic
+sudo systemctl enable snap.amazon-ssm-agent.amazon-ssm-agent.service
+sudo systemctl start snap.amazon-ssm-agent.amazon-ssm-agent.service
+sudo systemctl restart snap.amazon-ssm-agent.amazon-ssm-agent.service
+
 # Jenkins tmp permissions
 sudo mkdir -p /var/lib/jenkins@tmp
 sudo chmod -R 777 /var/lib/jenkins@tmp
