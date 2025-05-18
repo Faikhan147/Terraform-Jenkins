@@ -8,11 +8,6 @@ variable "instance_type" {
   type        = string
 }
 
-# variable "key_name" {
-#   description = "Key pair name"
-#   type        = string
-# }
-
 variable "security_group_id" {
   description = "Security Group ID"
   type        = string
