@@ -118,6 +118,9 @@ sudo chmod -R 777 /var/lib/jenkins/init.groovy.d
 sudo find /var/lib/jenkins/casc_configs/ -type f -name "*.yaml" -exec chmod 777 {} \;
 sudo find /var/lib/jenkins/dsl_scripts/ -type f -name "*.yaml" -exec chmod 777 {} \;
 
+# Copy Jenkins Authentication  YAML file from S3 folder to Jenkins config folder
+sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Authentication/  /var/lib/jenkins/casc_configs/
+
 # Copy Jenkins Plugins  YAML file from S3 folder to Jenkins config folder
 sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Plugins/  /var/lib/jenkins/init.groovy.d/ --recursive
 
