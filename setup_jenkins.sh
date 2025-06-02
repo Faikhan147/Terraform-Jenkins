@@ -53,7 +53,8 @@ EOF
 cat <<EOF | sudo tee /etc/default/jenkins > /dev/null
 # Jenkins home directory
 JENKINS_HOME="/var/lib/jenkins"
-JAVA_ARGS="-Djenkins.install.runSetupWizard=false -D casc.jenkins.config=/var/lib/jenkins/casc_configs"
+JAVA_ARGS="-Djenkins.install.runSetupWizard=false -Djenkins.Casc.config=/var/lib/jenkins/casc_configs/jenkins-login.yaml"
+CASC_JENKINS_CONFIG=/var/lib/jenkins/casc_configs
 EOF
 
 # Reload systemd and start Jenkins
