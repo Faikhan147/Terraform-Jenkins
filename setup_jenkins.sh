@@ -54,7 +54,7 @@ EOF
 # Reload systemd and start Jenkins
 sudo systemctl daemon-reload
 sudo systemctl enable jenkins
-sudo systemctl start jenkins
+sudo systemctl restart jenkins
 
 # Install Docker
 sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
