@@ -34,11 +34,17 @@ sudo rm -f /var/lib/jenkins/jenkins.install.InstallUtil.lastExecVersion
 
 # Create JCasC config folder and file
 sudo mkdir -p /var/lib/jenkins/casc_configs
+sudo mkdir -p /var/lib/jenkins/init.groovy.d
 sudo chown -R jenkins:jenkins /var/lib/jenkins/casc_configs/
+sudo chown -R jenkins:jenkins /var/lib/jenkins/init.groovy.d/
 sudo chmod -R 755 /var/lib/jenkins/casc_configs
+sudo chmod -R 755 /var/lib/jenkins/init.groovy.d
 
 # Copy Jenkins Authentication  YAML file from S3 folder to Jenkins config folder
 sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Authentication/jenkins-login.yaml  /var/lib/jenkins/casc_configs/
+
+# Copy Jenkins Plugins  YAML file from S3 folder to Jenkins config folder
+sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Plugins/  /var/lib/jenkins/init.groovy.d/ --recursive
 
 # Replace jenkins.service content
 cat <<EOF | sudo tee /usr/lib/systemd/system/jenkins.service > /dev/null
@@ -138,9 +144,6 @@ sudo chown -R jenkins:jenkins /var/lib/jenkins/dsl_scripts/
 sudo chmod -R 755 /var/lib/jenkins/init.groovy.d
 sudo chmod -R 755 /var/lib/jenkins/casc_configs
 sudo chmod -R 755 /var/lib/jenkins/dsl_scripts
-
-# Copy Jenkins Plugins  YAML file from S3 folder to Jenkins config folder
-sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Plugins/  /var/lib/jenkins/init.groovy.d/ --recursive
 
 # Copy all Credentials YAML files from S3 folder to Jenkins config folder
 sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Credentials/ /var/lib/jenkins/casc_configs/ --recursive
