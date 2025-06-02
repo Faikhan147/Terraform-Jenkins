@@ -18,6 +18,12 @@ sudo systemctl enable jenkins
 # Wait for Jenkins to start
 sleep 30
 
+# Delete initial Jenkins setup files These files will block JCasC from running
+
+sudo rm -f /var/lib/jenkins/secrets/initialAdminPassword
+sudo rm -f /var/lib/jenkins/jenkins.install.UpgradeWizard.state
+sudo rm -f /var/lib/jenkins/jenkins.install.InstallUtil.lastExecVersion
+
 # Create JCasC config folder and file
 sudo mkdir -p /var/lib/jenkins/casc_configs
 sudo chown -R jenkins:jenkins /var/lib/jenkins/casc_configs/
@@ -47,8 +53,7 @@ EOF
 cat <<EOF | sudo tee /etc/default/jenkins > /dev/null
 # Jenkins home directory
 JENKINS_HOME="/var/lib/jenkins"
-JAVA_ARGS="-Djenkins.install.runSetupWizard=false"
-CASC_JENKINS_CONFIG=/var/lib/jenkins/casc_configs
+JAVA_ARGS="-Djenkins.install.runSetupWizard=false -D casc.jenkins.config=/var/lib/jenkins/casc_configs"
 EOF
 
 # Reload systemd and start Jenkins
