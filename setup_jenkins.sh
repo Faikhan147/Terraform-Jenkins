@@ -5,6 +5,14 @@ sudo apt update -y
 sudo apt install openjdk-21-jdk -y
 java -version
 
+# Install AWS CLI
+sudo apt install unzip -y
+cd /tmp
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+aws --version
+
 # Install Jenkins
 sudo wget -O /usr/share/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
 echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
@@ -71,14 +79,6 @@ sudo apt install docker-ce -y
 sudo usermod -aG docker jenkins
 docker --version
 sudo systemctl restart jenkins
-
-# Install AWS CLI
-sudo apt install unzip -y
-cd /tmp
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
-aws --version
 
 # Install kubectl
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
