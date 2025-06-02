@@ -47,7 +47,7 @@ EOF
 cat <<EOF | sudo tee /etc/default/jenkins > /dev/null
 # Jenkins home directory
 JENKINS_HOME="/var/lib/jenkins"
-
+JAVA_ARGS="-Djenkins.install.runSetupWizard=false"
 CASC_JENKINS_CONFIG=/var/lib/jenkins/casc_configs
 EOF
 
