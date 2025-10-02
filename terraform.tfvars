@@ -1,3 +1,4 @@
+region = "us-east-1"
 ami_id             = "ami-0e35ddab05955cf57"
 instance_type      = "t2.medium"
 security_group_id  = "sg-002701e12800a229e"
