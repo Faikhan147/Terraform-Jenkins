@@ -6,6 +6,6 @@ volume_size        = 25
 volume_type = "gp3"
 jenkins_s3_ssm_role_name  = "jenkins-s3-ssm-access"
 kms_key_name        = "s3-kms-decrypt"
-kms_key_arn        = "arn:aws:kms:ap-south-1:195275659054:key/cf1e36fb-e5c5-4d3d-bfd9-4eda4041cb55"
+kms_key_arn        = "arn:aws:kms:ap-south-1:584868042761:key/cf1e36fb-e5c5-4d3d-bfd9-4eda4041cb55"
 AmazonS3FullAccess_arn        = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
 AmazonSSMManagedInstanceCore_arn        = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
