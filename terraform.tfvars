@@ -8,4 +8,5 @@ security_group_id  = "sg-002701e12800a229e"
 subnet_id = "subnet-0f1267acaae7d5632"
 volume_size        = 25
 volume_type = "gp3"
+kms_key_arn = ""
 instance_name = "Jenkins-Machine"
