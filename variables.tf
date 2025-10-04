@@ -58,3 +58,8 @@ variable "kms_key_arn" {
   description = "Name tag for the EC2 instance"
   type        = string
 }
+
+variable "instance_name" {
+  description = "Name tag for the EC2 instance"
+  type        = string
+}
