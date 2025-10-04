@@ -49,11 +49,6 @@ variable "volume_type" {
   type        = string
 }
 
-variable "volume_type" {
-  description = "Root EBS volume type (e.g., gp3, gp2, io1)"
-  type        = string
-}
-
 variable "kms_key_arn" {
   description = "Name tag for the EC2 instance"
   type        = string
