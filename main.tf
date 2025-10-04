@@ -47,7 +47,7 @@ resource "aws_instance" "this" {
     version = "$Latest"
   }
 
-  user_data = var.user_data
+  user_data = file(var.user_data_path) 
 
   tags = {
     Name = var.instance_name
