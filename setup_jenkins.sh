@@ -41,10 +41,10 @@ sudo chmod -R 755 /var/lib/jenkins/casc_configs
 sudo chmod -R 755 /var/lib/jenkins/init.groovy.d
 
 # Copy Jenkins Authentication  YAML file from S3 folder to Jenkins config folder
-sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Authentication/jenkins-login.yaml  /var/lib/jenkins/casc_configs/
+sudo aws s3 cp s3://terraform-backend-all-envs/Jenkins-Authentication/jenkins-login.yaml  /var/lib/jenkins/casc_configs/
 
 # Copy Jenkins Plugins  YAML file from S3 folder to Jenkins config folder
-sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Plugins/  /var/lib/jenkins/init.groovy.d/ --recursive
+sudo aws s3 cp s3://terraform-backend-all-envs/Jenkins-Plugins/  /var/lib/jenkins/init.groovy.d/ --recursive
 
 # Replace jenkins.service content
 cat <<EOF | sudo tee /usr/lib/systemd/system/jenkins.service > /dev/null
@@ -146,16 +146,16 @@ sudo chmod -R 755 /var/lib/jenkins/casc_configs
 sudo chmod -R 755 /var/lib/jenkins/dsl_scripts
 
 # Copy all Credentials YAML files from S3 folder to Jenkins config folder
-sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Credentials/ /var/lib/jenkins/casc_configs/ --recursive
+sudo aws s3 cp s3://terraform-backend-all-envs/Jenkins-Credentials/ /var/lib/jenkins/casc_configs/ --recursive
 
 # Copy SonarQube Authentication YAML file from S3 folder to Jenkins config folder
-sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-System/sonar-authentication.yaml /var/lib/jenkins/casc_configs/
+sudo aws s3 cp s3://terraform-backend-all-envs/Jenkins-System/sonar-authentication.yaml /var/lib/jenkins/casc_configs/
 
 # Copy SonarQube Scanner YAML file from S3 folder to Jenkins config folder
-sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Tools/sonar-scanner.yaml /var/lib/jenkins/casc_configs/
+sudo aws s3 cp s3://terraform-backend-all-envs/Jenkins-Tools/sonar-scanner.yaml /var/lib/jenkins/casc_configs/
 
 # Copy seed Job  YAML file from S3 folder to Jenkins config folder
-sudo aws s3 cp s3://terraform-backend-faisal-khan/Jenkins-Pipelines/seed-job /var/lib/jenkins/init.groovy.d/ --recursive
+sudo aws s3 cp s3://terraform-backend-all-envs/Jenkins-Pipelines/seed-job /var/lib/jenkins/init.groovy.d/ --recursive
 
 # Final Reload systemd and start Jenkins
 sudo systemctl daemon-reload
