@@ -18,7 +18,7 @@ resource "aws_launch_template" "this" {
   network_interfaces {
     subnet_id                   = var.subnet_id
     associate_public_ip_address  = true
-    vpc_security_group_ids = [var.security_group_id]
+    security_groups             = [var.security_group_id]
   }
 
   block_device_mappings {
