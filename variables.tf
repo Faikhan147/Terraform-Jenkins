@@ -1,3 +1,9 @@
+variable "region" {
+  description = "AMI ID for the Jenkins instance"
+  type        = string
+}
+
+
 variable "ami_id" {
   description = "AMI ID for the Jenkins instance"
   type        = string
