@@ -1,6 +1,11 @@
 region = "us-east-1"
+instance_profile_name = "Jenkins-instance-profile"
+jenkins_role_name = "jenkins-ssm-role"
+template_name = "Jenkins-template"
 ami_id             = "ami-0360c520857e3138f"
 instance_type      = "t2.medium"
 security_group_id  = "sg-002701e12800a229e"
+subnet_id = "subnet-0f1267acaae7d5632"
 volume_size        = 25
 volume_type = "gp3"
+instance_name = "Jenkins-Machine"
