@@ -47,7 +47,7 @@ resource "aws_instance" "this" {
     version = "$Latest"
   }
 
-  user_data = file("${path.module}/setup_jenkins.sh")
+  user_data = var.user_data
 
   tags = {
     Name = var.instance_name
