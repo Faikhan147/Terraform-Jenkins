@@ -9,5 +9,5 @@ subnet_id = "subnet-0f1267acaae7d5632"
 volume_size        = 25
 volume_type = "gp3"
 kms_key_arn = "arn:aws:kms:us-east-1:584868042761:key/8b26dfee-15ef-46f9-b547-4e328eea9db2"
-user_data_path = "${path.module}/setup_jenkins.sh"
+user_data_path = "setup_jenkins.sh" 
 instance_name = "Jenkins-Machine"
