@@ -7,6 +7,10 @@ terraform validate
 echo "📝 Formatting Terraform files..."
 terraform fmt -recursive
 
+# Display workspace list
+echo "🔢 Listing available workspaces..."
+terraform workspace list
+
 echo "📄 Creating plan for jenkins..."
 terraform plan -var-file="terraform.tfvars" -out=tfplan.out
 
