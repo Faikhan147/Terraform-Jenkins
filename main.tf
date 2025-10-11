@@ -31,7 +31,6 @@ resource "aws_launch_template" "this" {
       delete_on_termination = true   # ✅ recommended
       encrypted             = true
       kms_key_id            = var.kms_key_arn   # <- yahan attach karo apni existing KMS key
-
     }
   }
 
