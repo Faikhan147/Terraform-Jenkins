@@ -10,6 +10,6 @@ root_volume_size    = 150
 root_volume_type    = "gp3"
 root_volume_iops    = 3000
 root_volume_throughput = 1000
-kms_key_arn = "arn:aws:kms:ap-southeast-2:992862946505:key/c77d8a30-e9ed-452b-a111-aa317efe70d0"
+kms_key_arn = "arn:aws:kms:ap-southeast-2:584868042761:key/f57bb0f7-26f8-46ae-9355-85f0a3eb8234"
 user_data_path = "setup_jenkins.sh" 
 instance_name = "Jenkins-Machine"
