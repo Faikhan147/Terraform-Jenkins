@@ -1,4 +1,4 @@
-region = "ap-southeast-2"
+region = "ap-southeast-1"
 instance_profile_name = "Jenkins-instance-profile"
 jenkins_role_name = "jenkins-ssm-role"
 template_name = "Jenkins-template"
