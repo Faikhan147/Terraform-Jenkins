@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket         = "terraform-backend-all-envs"
+    bucket         = "terraform-backend-all-environments"
     key            = "jenkins/terraform.tfstate"
     region         = "ap-southeast-2"
     encrypt        = true
